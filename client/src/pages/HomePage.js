@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layout/Layout";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices";
 const HomePage = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -134,26 +135,32 @@ const HomePage = () => {
             </button>
           </div>
         </div>
-        <div className="col-md-9">
+        <div className="col-md-9 offset-1">
           <h1 className="text-center">All Products</h1>
           <div className="d-flex flex-wrap">
             {products?.map((p) => (
-              <div className="card m-2" style={{ width: "18rem" }}>
+              <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
                 <img
                   src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
-                <div className="card-body width-fit">
+                <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
                   <p className="card-text">
                     {p.description.substring(0, 30)}...
                   </p>
                   <p className="card-text"> $ {p.price}</p>
-                  <button className="btn btn-primary">More Details</button>
-                  <button className="btn btn-secondary ">ADD TO CART</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </button>
+                  <button className="btn btn-secondary">
+                    ADD TO CART
+                  </button>
                 </div>
-                
               </div>
             ))}
           </div>
