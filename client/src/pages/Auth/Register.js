@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../../components/Layout/Layout";
+import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -39,7 +39,7 @@ const Register = () => {
 
   return (
     <Layout title="Register - Ecommer App">
-      <div className="form-container ">
+      <div className="form-container" style={{ minHeight: "90vh" }}>
         <form onSubmit={handleSubmit}>
           <h4 className="title">REGISTER FORM</h4>
           <div className="mb-3">

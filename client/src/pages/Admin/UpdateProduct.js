@@ -61,7 +61,7 @@ const UpdateProduct = () => {
 
   //create product function
   const handleUpdate = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const productData = new FormData();
       productData.append("name", name);
