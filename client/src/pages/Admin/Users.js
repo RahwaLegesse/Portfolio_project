@@ -7,31 +7,37 @@ import { useAuth } from "../../context/auth";
 
 import AdminMenu from '../../components/Layout/AdminMenu'
 
+
 const AllUsers = () => {
-    const [allUser,setAllUsers] = useState([])
-    const [auth, setAuth] = useAuth();
+  const [users, setUsers] = useState([]);
   
 
-    const fetchAllUsers = async() =>{
-       
-      
-      const {response }= await axios.get("/api/v1/auth/users");
-
-      if (response.success) {
-        setAllUsers(response.message);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('/api/v1/auth/users');
+        setUsers(response.data); // Set the users array in state
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
       }
-        
-        if(response.error){
-            toast.error(response.message)
-        }
-        
+    };
 
-    }
-
-    useEffect(() => {
-      fetchAllUsers();
-    }, []);
-  
+    fetchUsers();
+  }, []);
+      
+    
+      useEffect(() => {
+        const fetchUsers = async () => {
+          try {
+            const response = await axios.get('/api/v1/auth/users');
+            setUsers(response.data); // Set the users array in state
+          } catch (error) {
+            console.error('Error fetching users:', error.message);
+          }
+        };
+    
+        fetchUsers();
+      }, []);
 
   return (
     <Layout title={"All Orders Data"}>
@@ -40,7 +46,7 @@ const AllUsers = () => {
           <AdminMenu />
         </div>
         <div className="col-md-9">
-          <h1 className="text-center">All Orders</h1>
+          <h1 className="text-center">All Users</h1>
           
             
               <div className="border shadow">
@@ -54,14 +60,24 @@ const AllUsers = () => {
                       <th scope="col">date</th>
                       </tr>
                   </thead>
-                  <tbody>
-          {allUser.map((el, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{el?.name}</td>
-            </tr>
-          ))}
-        </tbody>
+                  
+                  <tbody className=''>
+                    {
+                        users.map((el,index) => {
+                          return(
+                            <tr>
+                                <td>{index+1}</td>
+                                <td>{el?.name}</td>
+                                <td>{el?.email}</td>
+                                <td>{el?.role}</td>
+                                <td>{moment(el?.createdAt).format('LL')}</td>
+                                
+                            </tr>
+                                )
+                            })
+                            }
+                    </tbody>
+                  
                 </table>
               </div>
         </div>
