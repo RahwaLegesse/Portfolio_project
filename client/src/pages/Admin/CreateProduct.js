@@ -76,6 +76,7 @@ const CreateProduct = () => {
                 bordered={false}
                 placeholder="Select a category"
                 size="large"
+                required
                 showSearch
                 className="form-select mb-3"
                 onChange={(value) => {
@@ -97,6 +98,7 @@ const CreateProduct = () => {
                     accept="image/*"
                     onChange={(e) => setPhoto(e.target.files[0])}
                     hidden
+                    required
                   />
                 </label>
               </div>
@@ -107,6 +109,7 @@ const CreateProduct = () => {
                       src={URL.createObjectURL(photo)}
                       alt="product_photo"
                       height={"200px"}
+                      required
                       className="img img-responsive"
                     />
                   </div>
@@ -116,6 +119,7 @@ const CreateProduct = () => {
                 <input
                   type="text"
                   value={name}
+                  required
                   placeholder="write a name"
                   className="form-control"
                   onChange={(e) => setName(e.target.value)}
@@ -125,6 +129,7 @@ const CreateProduct = () => {
                 <textarea
                   type="text"
                   value={description}
+                  required
                   placeholder="write a description"
                   className="form-control"
                   onChange={(e) => setDescription(e.target.value)}
@@ -135,6 +140,7 @@ const CreateProduct = () => {
                 <input
                   type="number"
                   value={price}
+                  required
                   placeholder="write a Price"
                   className="form-control"
                   onChange={(e) => setPrice(e.target.value)}

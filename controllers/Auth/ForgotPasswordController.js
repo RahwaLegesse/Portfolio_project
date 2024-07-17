@@ -3,18 +3,16 @@ import userModel from "../../models/userModel.js";
 
 export const ForgotPasswordController = async (req, res) => {
     try {
-      const { email, answer, newPassword } = req.body;
+      const { email, newPassword } = req.body;
       if (!email) {
         res.status(400).send({ message: "Emai is required" });
       }
-      if (!answer) {
-        res.status(400).send({ message: "answer is required" });
-      }
+      
       if (!newPassword) {
         res.status(400).send({ message: "New Password is required" });
       }
     
-      const user = await userModel.findOne({ email, answer });
+      const user = await userModel.findOne({ email});
       
       if (!user) {
         return res.status(404).send({
