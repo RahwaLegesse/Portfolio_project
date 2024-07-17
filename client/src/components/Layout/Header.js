@@ -8,16 +8,28 @@ import { useCart } from "../../context/cart";
 import { Badge } from "antd";
 
 const Header = () => {
+  // Retrieve authentication state and setter function from useAuth hook
   const [auth, setAuth] = useAuth();
+
+  // Retrieve cart state from useCart hook
   const [cart] = useCart();
+
+  // Retrieve categories from useCategory hook
   const categories = useCategory();
+
+  // Function to handle logout action
   const handleLogout = () => {
+    // Update authentication state to clear user session
     setAuth({
       ...auth,
-      user: null,
-      token: "",
+      user: null, // Set user to null indicating no authenticated user
+      token: "", // Clear token to indicate no active session
     });
+
+    // Remove authentication data from localStorage
     localStorage.removeItem("auth");
+
+    // Show a success toast notification to the user
     toast.success("Logout Successfully");
   };
   return (
@@ -37,7 +49,7 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              🛒 Ecommerce App
+              E-commerce
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput />

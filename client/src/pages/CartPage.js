@@ -7,7 +7,7 @@ import DropIn from "braintree-web-drop-in-react";
 import { AiFillWarning } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
-import "../styles/CartStyles.css";
+import "./CartStyles.css";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
@@ -97,8 +97,8 @@ const CartPage = () => {
           </div>
         </div>
         <div className="container ">
-          <div className="row ">
-            <div className="col-md-7  p-0 m-0">
+          <div className="flex-container">
+            <div className="col-md-7 flex-item p-0 m-0">
               {cart?.map((p) => (
                 <div className="row card flex-row" key={p._id}>
                   <div className="col-md-4">
@@ -126,11 +126,11 @@ const CartPage = () => {
                 </div>
               ))}
             </div>
-            <div className="col-md-5 cart-summary ">
-              <h2>Cart Summary</h2>
-              <p>Total | Checkout | Payment</p>
+            <div className="col-md-5 flex-item cart-summary ">
+              <h2>Payment Summary</h2>
+              <p></p>
               <hr />
-              <h4>Total : {totalPrice()} </h4>
+              <h4>Total Price: {totalPrice()} </h4>
               {auth?.user?.address ? (
                 <>
                   <div className="mb-3">

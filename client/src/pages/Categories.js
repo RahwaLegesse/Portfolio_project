@@ -13,6 +13,7 @@ const Categories = () => {
               <div className="card">
                 <Link to={`/category/${c.slug}`} className="btn cat-btn">
                   {c.name}
+                  
                 </Link>
               </div>
             </div>
