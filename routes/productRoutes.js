@@ -1,22 +1,20 @@
 import express from "express";
-import {
-  brainTreePaymentController,
-  braintreeTokenController,
-  createProductController,
-  deleteProductController,
-  getProductController,
-  getSingleProductController,
-  productCategoryController,
-  productCountController,
-  productFiltersController,
-  productListController,
-  productPhotoController,
-  realtedProductController,
-  searchProductController,
-  updateProductController,
-} from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import formidable from "express-formidable";
+import { CreateProductController } from "../controllers/Product/CreateProductController.js";
+import { updateProductController } from "../controllers/Product/updateProductController.js";
+import { getProductController } from "../controllers/Product/getProductController.js";
+import { getSingleProductController } from "../controllers/Product/getSingleProductController.js";
+import { productImgController } from "../controllers/Product/productImgController.js";
+import { deleteProductController } from "../controllers/Product/deleteProductController.js";
+import { productFiltersController } from "../controllers/Product/productFiltersController.js";
+import { productCountController } from "../controllers/Product/productCountController.js";
+import { productListController } from "../controllers/Product/productListController.js";
+import { searchProductController } from "../controllers/Product/searchProductController.js";
+import { productCategoryController } from "../controllers/Product/productCategoryController.js";
+import { braintreeTokenController } from "../controllers/Product/braintreeTokenController.js";
+import { brainTreePaymentController } from "../controllers/Product/brainTreePaymentController.js";
+import { relatedProductController } from "../controllers/Product/relatedProductController.js";
 
 const router = express.Router();
 
@@ -26,7 +24,7 @@ router.post(
   requireSignIn,
   isAdmin,
   formidable(),
-  createProductController
+  CreateProductController
 );
 //routes
 router.put(
@@ -44,7 +42,7 @@ router.get("/get-product", getProductController);
 router.get("/get-product/:slug", getSingleProductController);
 
 //get photo
-router.get("/product-photo/:pid", productPhotoController);
+router.get("/product-photo/:pid", productImgController);
 
 //delete rproduct
 router.delete("/delete-product/:pid", deleteProductController);
@@ -62,7 +60,7 @@ router.get("/product-list/:page", productListController);
 router.get("/search/:keyword", searchProductController);
 
 //similar product
-router.get("/related-product/:pid/:cid", realtedProductController);
+router.get("/related-product/:pid/:cid", relatedProductController);
 
 //category wise product
 router.get("/product-category/:slug", productCategoryController);
