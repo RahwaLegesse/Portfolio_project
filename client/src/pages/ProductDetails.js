@@ -97,7 +97,7 @@ const ProductDetails = () => {
                     className="btn btn-info ms-1"
                     onClick={() => navigate(`/product/${p.slug}`)}
                   >
-                    More Details
+                    View
                   </button>
                   {/* <button
                   className="btn btn-dark ms-1"

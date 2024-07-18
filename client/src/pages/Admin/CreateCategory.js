@@ -131,7 +131,7 @@ const CreateCategory = () => {
                               handleDelete(c._id);
                             }}
                           >
-                            Delete
+                            Remove
                           </button>
                         </td>
                       </tr>
