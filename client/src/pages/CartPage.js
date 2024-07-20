@@ -62,21 +62,38 @@ const CartPage = () => {
   const handlePayment = async () => {
     try {
       setLoading(true);
+  
+      // Request the payment method nonce from Braintree
       const { nonce } = await instance.requestPaymentMethod();
+  
+      // Post the payment details to your backend
       const { data } = await axios.post("/api/v1/product/braintree/payment", {
         nonce,
         cart,
       });
+  
+      // Successfully completed the payment
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);
       navigate("/dashboard/user/orders");
-      toast.success("Payment Completed Successfully ");
+      toast.success("Payment Completed Successfully");
+  
     } catch (error) {
-      console.log(error);
+      console.error("Payment failed:", error);
+  
+      // Ensure loading state is reset even on failure
       setLoading(false);
+  
+      // Provide user feedback
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(`Payment Failed: ${error.response.data.message}`);
+      } else {
+        toast.error("Payment Failed: An unexpected error occurred.");
+      }
     }
   };
+  
   return (
     <Layout>
       <div className=" cart-page">

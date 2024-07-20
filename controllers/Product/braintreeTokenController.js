@@ -10,17 +10,22 @@ var gateway = new braintree.BraintreeGateway({
   privateKey: process.env.Private_Key,
 });
 
+// Exporting the braintreeTokenController function so it can be used in other parts of the application
 export const braintreeTokenController = async (req, res) => {
-    try {
-      gateway.clientToken.generate({}, function (err, response) {
-        if (err) {
-          res.status(500).send(err);
-        } else {
-          res.send(response);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  try {
+    // Using the Braintree gateway to generate a client token
+    gateway.clientToken.generate({}, function (err, response) {
+      // If there's an error generating the token, send a 500 status code with the error
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        // If the token generation is successful, send the response back to the client
+        res.send(response);
+      }
+    });
+  } catch (error) {
+    // Catch any other errors that might occur and log them
+    console.log(error);
+  }
+};
   

@@ -10,50 +10,51 @@ const gateway = new braintree.BraintreeGateway({
   publicKey: process.env.Public_Key,
   privateKey: process.env.Private_Key,
 });
-
+//use this code 5555 5555 5555 4444
+// Exporting the brainTreePaymentController function so it can be used in other parts of the application
 export const brainTreePaymentController = async (req, res) => {
   try {
+    // Destructure nonce and cart from the request body
     const { nonce, cart } = req.body;
+
+    // Initialize total to 0
     let total = 0;
-    cart.forEach((item) => {
-      total += item.price;
+
+    // Iterate over each item in the cart to calculate the total price
+    cart.map((i) => {
+      total += i.price;
     });
 
-    gateway.transaction.sale(
+    // Create a new transaction using the Braintree gateway
+    let newTransaction = gateway.transaction.sale(
       {
-        amount: total.toFixed(2),
-        paymentMethodNonce: nonce,
+        amount: total, // Set the total amount for the transaction
+        paymentMethodNonce: nonce, // Use the provided payment method nonce
         options: {
-          submitForSettlement: true,
+          submitForSettlement: true, // Automatically submit the transaction for settlement
         },
       },
-      async (error, result) => {
-        if (error) {
-          console.error("Error processing payment:", error);
-          return res.status(500).send(error);
-        }
-        
-        if (result.success) {
-          try {
-            const order = new orderModel({
-              products: cart,
-              payment: result.transaction,
-              buyer: req.user._id,
-            });
-            await order.save();
-            return res.status(200).json({ success: true, message: "Payment successful", order });
-          } catch (saveError) {
-            console.error("Error saving order:", saveError);
-            return res.status(500).json({ success: false, message: "Error saving order", error: saveError });
-          }
+      // Callback function to handle the result of the transaction
+      function (error, result) {
+        // If the transaction was successful
+        if (result) {
+          // Create a new order in the database
+          const order = new orderModel({
+            products: cart, // Store the cart products in the order
+            payment: result, // Store the transaction result in the order
+            buyer: req.user._id, // Associate the order with the buyer's user ID
+          }).save();
+
+          // Respond with a success message
+          res.json({ ok: true });
         } else {
-          console.error("Transaction failed:", result.message);
-          return res.status(500).json({ success: false, message: "Transaction failed", error: result.message });
+          // If there was an error with the transaction, respond with a 500 status and the error message
+          res.status(500).send(error);
         }
       }
     );
   } catch (error) {
-    console.error("Unexpected error:", error);
-    return res.status(500).json({ success: false, message: "Unexpected error", error: error.message });
+    // Catch any other errors that might occur and log them
+    console.log(error);
   }
 };

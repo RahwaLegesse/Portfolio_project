@@ -39,7 +39,7 @@ const CreateCategory = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something wwent wrong in getting catgeory");
+      toast.error("there is something wrong");
     }
   };
 
@@ -75,14 +75,14 @@ const CreateCategory = () => {
         `/api/v1/category/delete-category/${pId}`
       );
       if (data.success) {
-        toast.success(`category is deleted`);
+        toast.success(`category deleted`);
 
         getAllCategory();
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast.error("ther is somtihing went wrong");
     }
   };
   return (
@@ -116,7 +116,7 @@ const CreateCategory = () => {
                         <td key={c._id}>{c.name}</td>
                         <td>
                           <button
-                            className="btn btn-primary ms-2"
+                            className="btn btn-secondary ms-2"
                             onClick={() => {
                               setVisible(true);
                               setUpdatedName(c.name);
