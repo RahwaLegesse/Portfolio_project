@@ -4,7 +4,7 @@ import userModel from "../../models/userModel.js";
 export const registerController = async (req, res) => {
   try {
     // Extract name, email, and password from the request body
-    const { name, email, password } = req.body;
+    const { name, email, password} = req.body;
 
     // Perform validations on the input data
     if (!name) {
@@ -16,6 +16,7 @@ export const registerController = async (req, res) => {
     if (!password) {
       return res.send({ message: "Password is Required" });
     }
+    
     
     // Check if a user with the given email already exists
     const if_user_exist = await userModel.findOne({ email });
@@ -29,12 +30,13 @@ export const registerController = async (req, res) => {
 
     // Hash the user's password before saving it
     const hashedPassword = await hashPassword(password);
-
+    
     // Create a new user and save it to the database
     const user = await new userModel({
       name,
       email,
       password: hashedPassword,
+    
     }).save();
     
     // Send a success response with the newly created user information

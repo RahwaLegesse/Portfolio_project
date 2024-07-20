@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "../../styles/AuthStyles.css";
 const Register = () => {
@@ -77,6 +77,8 @@ const Register = () => {
           <button type="submit" className="btn btn-primary">
             REGISTER
           </button>
+          <p className='my-5'>Already have an Account ? <Link to={"/login"} className='log'>login</Link></p>
+           
         </form>
       </div>
     </Layout>
