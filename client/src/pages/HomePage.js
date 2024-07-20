@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Radio } from "antd";
-import { Prices } from "../components/Prices";
 import { useCart } from "../context/cart";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -19,6 +18,7 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [sortBy,setSortBy] = useState("")
 
   //get all cat
   const getAllCategory = async () => {
@@ -106,6 +106,23 @@ const HomePage = () => {
       console.log(error);
     }
   };
+  const handleOnChangeSortBy = (e)=>{
+    const { value } = e.target
+
+    setSortBy(value)
+
+    if(value === 'asc'){
+      setProducts(preve => preve.sort((a,b)=>a.price - b.price))
+    }
+
+    if(value === 'dsc'){
+      setProducts(preve => preve.sort((a,b)=>b.price - a.price))
+    }
+  }
+
+  useEffect(()=>{
+
+  },[sortBy])
   return (
     <Layout title={"ALl Products - Best offers "}>
       {/* banner image */}
@@ -118,7 +135,26 @@ const HomePage = () => {
       {/* banner image */}
       <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
-          <h4 className="text-center">List By Category</h4>
+
+        {/**sort by */}
+        <div className=''>
+                    <h3 className='text-base uppercase font-medium text-slate-500 border-b pb-1 border-slate-300'>Sort by</h3>
+
+                    <form className='text-sm flex flex-col gap-2 py-2'>
+                        <div className='flex items-center gap-3'>
+                          <input type='radio' name='sortBy' checked={sortBy === 'asc'} onChange={handleOnChangeSortBy} value={"asc"}/>
+                          <label>Price - Low to High</label>
+                        </div>
+
+                        <div className='flex items-center gap-3'>
+                          <input type='radio' name='sortBy' checked={sortBy === 'dsc'} onChange={handleOnChangeSortBy} value={"dsc"}/>
+                          <label>Price - High to Low</label>
+                        </div>
+                    </form>
+                </div>
+
+
+          <h4 className="text-left">Catagories</h4>
           <div className="d-flex flex-column">
             {categories?.map((c) => (
               <Checkbox
@@ -129,17 +165,10 @@ const HomePage = () => {
               </Checkbox>
             ))}
           </div>
-          {/* price filter */}
-          <h4 className="text-center mt-4">List By Price</h4>
-          <div className="d-flex flex-column">
-            <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-              {Prices?.map((p) => (
-                <div key={p._id}>
-                  <Radio value={p.array}>{p.name}</Radio>
-                </div>
-              ))}
-            </Radio.Group>
-          </div>
+          
+          
+                
+
           <div className="d-flex flex-column">
             <button
               className="btn btn-danger"
