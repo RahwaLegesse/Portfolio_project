@@ -5,7 +5,6 @@ import { CreateProductController } from "../controllers/Product/CreateProductCon
 import { updateProductController } from "../controllers/Product/updateProductController.js";
 import { getProductController } from "../controllers/Product/getProductController.js";
 import { getSingleProductController } from "../controllers/Product/getSingleProductController.js";
-import { productImgController } from "../controllers/Product/productImgController.js";
 import { deleteProductController } from "../controllers/Product/deleteProductController.js";
 import { productFiltersController } from "../controllers/Product/productFiltersController.js";
 import { productCountController } from "../controllers/Product/productCountController.js";
@@ -15,6 +14,7 @@ import { productCategoryController } from "../controllers/Product/productCategor
 import { braintreeTokenController } from "../controllers/Product/braintreeTokenController.js";
 import { brainTreePaymentController } from "../controllers/Product/brainTreePaymentController.js";
 import { relatedProductController } from "../controllers/Product/relatedProductController.js";
+import { productImgController } from "../controllers/Product/productImgController.js";
 
 const router = express.Router();
 

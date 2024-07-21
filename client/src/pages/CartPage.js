@@ -11,11 +11,15 @@ import "./CartStyles.css";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
-  const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [cart, setCart] = useCart(() => {
+    // Initialize cart from localStorage or as an empty array
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   //total price
   const totalPrice = () => {
@@ -35,13 +39,21 @@ const CartPage = () => {
   //detele item
   const removeCartItem = (pid) => {
     try {
-      let myCart = [...cart];
-      let index = myCart.findIndex((item) => item._id === pid);
-      myCart.splice(index, 1);
-      setCart(myCart);
-      localStorage.setItem("cart", JSON.stringify(myCart));
+      setCart((prevCart) => {
+        const updatedCart = [...prevCart];
+        const index = updatedCart.findIndex((item) => item._id === pid);
+        
+        if (index !== -1) {
+          updatedCart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        } else {
+          console.warn(`Item with pid ${pid} not found in cart.`);
+        }
+        
+        return updatedCart;
+      });
     } catch (error) {
-      console.log(error);
+      console.error("Error removing item from cart:", error);
     }
   };
 
@@ -172,7 +184,7 @@ const CartPage = () => {
                     </button>
                   ) : (
                     <button
-                      className="btn btn-outline-warning"
+                      className="btn btn-danger"
                       onClick={() =>
                         navigate("/login", {
                           state: "/cart",

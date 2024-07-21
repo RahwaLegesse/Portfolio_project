@@ -143,12 +143,12 @@ const HomePage = () => {
                     <form className='text-sm flex flex-col gap-2 py-2'>
                         <div className='flex items-center gap-3'>
                           <input type='radio' name='sortBy' checked={sortBy === 'asc'} onChange={handleOnChangeSortBy} value={"asc"}/>
-                          <label>Price - Low to High</label>
+                          <label className="mx-2">Price - Low to High</label>
                         </div>
 
                         <div className='flex items-center gap-3'>
                           <input type='radio' name='sortBy' checked={sortBy === 'dsc'} onChange={handleOnChangeSortBy} value={"dsc"}/>
-                          <label>Price - High to Low</label>
+                          <label className="mx-2">Price - High to Low</label>
                         </div>
                     </form>
                 </div>
@@ -187,6 +187,7 @@ const HomePage = () => {
                   src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
+                  onClick={() => navigate(`/product/${p.slug}`)}
                 />
                 <div className="card-body">
                   <div className="card-name-price">
@@ -202,14 +203,9 @@ const HomePage = () => {
                     {p.description.substring(0, 60)}...
                   </p>
                   <div className="card-name-price">
+                    
                     <button
-                      className="btn btn-info ms-1"
-                      onClick={() => navigate(`/product/${p.slug}`)}
-                    >
-                      More Details
-                    </button>
-                    <button
-                      className="btn btn-dark ms-1"
+                      className="btn btn-danger ms-1"
                       onClick={() => {
                         setCart([...cart, p]);
                         localStorage.setItem(
